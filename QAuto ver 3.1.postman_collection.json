@@ -1,0 +1,1080 @@
+{
+	"info": {
+		"_postman_id": "53098522-a231-4431-bf22-3d42c3955389",
+		"name": "QAuto ver 3.0",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27353961"
+	},
+	"item": [
+		{
+			"name": "Validation New user",
+			"item": [
+				{
+					"name": "Create user (positive check)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Andrii\",\n  \"lastName\": \"Cherkasov\",\n  \"email\": \"Andrii16466@gmail.com\",\n  \"password\": \"Qwerty111\",\n  \"repeatPassword\": \"Qwerty111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/auth/signup",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user without (auth/signup)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Andrii\",\n  \"lastName\": \"Cherkasov\",\n  \"email\": \"Andrii11@gmail.com\",\n  \"password\": \"Andrii123\",\n  \"repeatPassword\": \"Andrii123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}",
+							"host": [
+								"{{BaseURL}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user with number in field \"Name\"\"",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Validate field Name error message\", function () {",
+									"    var error = pm.response.json();",
+									"    pm.expect(error.message).to.include(\"Name has to be from 2 to 20 characters long\");",
+									"    console.log(\"Response message: \" + error.message);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"1\",\n  \"lastName\": \"Cherkasov\",\n  \"email\": \"Andrii11@gmail.com\",\n  \"password\": \"Andrii123\",\n  \"repeatPassword\": \"Andrii123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/auth/signup",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user with @ in field \"LastName\"",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Validate field LastName error message\", function () {",
+									"    var error = pm.response.json();",
+									"    pm.expect(error.message).to.include(\"Name has to be from 2 to 20 characters long\");",
+									"    console.log(\"Response message: \" + error.message);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"1\",\n  \"lastName\": \"@\",\n  \"email\": \"Andrii11@gmail.com\",\n  \"password\": \"Andrii123\",\n  \"repeatPassword\": \"Andrii123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/auth/signup",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user with 1 symbol in Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Validate password error message\", function () {",
+									"    var error = pm.response.json();",
+									"    pm.expect(error.message).to.include(\"Password has to be from 8 to 15 characters long and contain at least one integer, one capital, and one small letter\");",
+									"    console.log(\"Response message: \" + error.message);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Andrii\",\n  \"lastName\": \"Cherkasov\",\n  \"email\": \"Andrii11@gmail.com\",\n  \"password\": \"A\",\n  \"repeatPassword\": \"A\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user with all empty fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Name is invalid\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    console.log(\"Validation Message:\", jsonData.status);",
+									"});",
+									"",
+									"pm.test(\"Last name has to be from 2 to 20 characters long\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    console.log(\"Validation Message:\", jsonData.status);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Email is incorrect\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    console.log(\"Validation Message:\", jsonData.status);",
+									"});",
+									"",
+									"pm.test(\"Password has to be from 8 to 15 characters long and contain at least one integer, one capital, and one small letter\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    console.log(\"Validation Message:\", jsonData.status);",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"\",\n  \"lastName\": \"\",\n  \"email\": \"\",\n  \"password\": \"\",\n  \"repeatPassword\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/auth/signup",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user with mistake in Email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Validate field Email error message\", function () {",
+									"    var error = pm.response.json();",
+									"    pm.expect(error.message).to.include(\"Email is incorrect\");",
+									"    console.log(\"Response message: \" + error.message);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Andrii\",\n  \"lastName\": \"Cherkasov\",\n  \"email\": \"Andrii11@gmailcom\",\n  \"password\": \"Andrii123\",\n  \"repeatPassword\": \"Andrii123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/auth/signup",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validation user Qauto/Qauto2 Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let dataArray = pm.collectionVariables.get(\"dataArray\");",
+									"",
+									"if(!dataArray) {",
+									"    dataArray = [\"111\",\"hjh\", \"halloworldnhswwdwwdwdwdwdwdwdwwdc\"];",
+									"    pm.collectionVariables.set(\"currentDataArray\", dataArray.shift());",
+									"    pm.collectionVariables.set(\"dataArray\", dataArray);",
+									"}else {",
+									"    let currentDataArray = dataArray.shift();",
+									"    pm.collectionVariables.set(\"currentDataArray\", currentDataArray);",
+									"    pm.collectionVariables.set(\"dataArray\",dataArray)",
+									"}",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let validationData = pm.collectionVariables.get(\"dataArray\");",
+									"",
+									"if (validationData.length > 0) {",
+									"    postman.setNextRequest(\"Name validation(repeat)\");",
+									"}else{",
+									"    pm.collectionVariables.unset(\"dataArray\");",
+									"    pm.collectionVariables.unset(\"currentDataArray\");",
+									"    postman.setNextRequest(\"empty email\");",
+									"}",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"{{currentDataArray}}\",\n  \"lastName\": \"Cherkasov\",\n  \"email\": \"{{$randomEmail}}\",\n  \"password\": \"Qwerty12345\",\n  \"repeatPassword\": \"Qwerty12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/auth/signup",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "json schema",
+			"item": [
+				{
+					"name": "create user json schema",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var schema = {",
+									"  \"type\": \"object\",",
+									"  \"properties\": {",
+									"    \"status\": {",
+									"      \"type\": \"string\"",
+									"    },",
+									"    \"data\": {",
+									"      \"type\": \"object\",",
+									"      \"properties\": {",
+									"        \"userId\": {",
+									"          \"type\": \"integer\"",
+									"        },",
+									"        \"photoFilename\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"distanceUnits\": {",
+									"          \"type\": \"string\"",
+									"        },",
+									"        \"currency\": {",
+									"          \"type\": \"string\"",
+									"        }",
+									"      },",
+									"      \"required\": [",
+									"        \"userId\",",
+									"        \"photoFilename\",",
+									"        \"distanceUnits\",",
+									"        \"currency\"",
+									"      ]",
+									"    }",
+									"  },",
+									"  \"required\": [",
+									"    \"status\",",
+									"    \"data\"",
+									"  ]",
+									"}",
+									"pm.test('Schema is valid', function () {",
+									"    pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let firstName = pm.variables.replaceIn(\"{{$randomFirstName}}\")",
+									"pm.collectionVariables.set('FirstName', firstName)",
+									"",
+									"let lastName = pm.variables.replaceIn(\"{{$randomLastName}}\")",
+									"pm.collectionVariables.set('LastName' , lastName)",
+									"",
+									"let email = pm.variables.replaceIn(\"{{$randomEmail}}\")",
+									"pm.collectionVariables.set('Email', email)",
+									"",
+									"let password = pm.variables.replaceIn('{{$randomPassword}}')",
+									"pm.collectionVariables.set('passwordreg', password)",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"{{FirstName}}\",\n  \"lastName\": \"{{LastName}}\",\n  \"email\": \"{{Email}}\",\n  \"password\": \"Andrii1111\",\n  \"repeatPassword\": \"Andrii1111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/auth/signup",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User flow",
+			"item": [
+				{
+					"name": "create user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let firstName = pm.variables.replaceIn(\"{{$randomFirstName}}\")",
+									"pm.collectionVariables.set('FirstName', firstName)",
+									"",
+									"let lastName = pm.variables.replaceIn(\"{{$randomLastName}}\")",
+									"pm.collectionVariables.set('LastName' , lastName)",
+									"",
+									"let email = pm.variables.replaceIn(\"{{$randomEmail}}\")",
+									"pm.collectionVariables.set('Email', email)",
+									"",
+									"let password = pm.variables.replaceIn('{{$randomPassword}}')",
+									"pm.collectionVariables.set('passwordreg', password)",
+									"",
+									"",
+									"",
+									"console.log(pm.variables.toObject())"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"{{FirstName}}\",\n  \"lastName\": \"{{LastName}}\",\n  \"email\": \"{{Email}}\",\n  \"password\": \"{{passwordreg}}\",\n  \"repeatPassword\": \"{{passwordreg}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/auth/signup",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Logout successful, status code is 200\", function () {",
+									"    console.log(\"Logout response status code: \", pm.response.code);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/auth/logout",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Login success\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{Email}}\",\n  \"password\": \"{{password}}\",\n  \"remember\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/auth/signin",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"photo\": \"https://cdn.pixabay.com/photo/2016/12/09/16/31/dog-1895260_1280.png\",\n  \"name\": \"{{FirstName}}\",\n  \"lastName\": \"{{LastName}}\",\n  \"dateBirth\": \"1986-03-17T15:21:05.000Z\",\n  \"country\": \"Argentina\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}users/profile",
+							"host": [
+								"{{BaseURL}}users"
+							],
+							"path": [
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change password",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let password = pm.variables.replaceIn('{{passwordreg}}')",
+									"pm.collectionVariables.set('password', password)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"User ID remains the same after password change\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    console.log(\"User ID after password change: \", jsonData.userId);",
+									"    pm.expect(jsonData.userId).to.eql(pm.environment.get(\"userId\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"oldPassword\": \"{{passwordreg}}\",\n  \"password\": \"{{password}}\",\n  \"repeatPassword\": \"{{password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}users/password",
+							"host": [
+								"{{BaseURL}}users"
+							],
+							"path": [
+								"password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile user (change data) Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Update Profile Test\", function () {",
+									"  pm.response.to.have.status(200);",
+									"  ",
+									"  var responseData = pm.response.json();",
+									"",
+									"  ",
+									"  pm.expect(responseData.name).to.eql(pm.request.body.name);",
+									"  pm.expect(responseData.dateBirth).to.eql(pm.request.body.dateBirth);",
+									"  pm.expect(responseData.country).to.eql(pm.request.body.country);",
+									"",
+									"  ",
+									" ",
+									"  console.log(\"Name match: \" + (responseData.name === pm.request.body.name));",
+									"  console.log(\"Date Birth match: \" + (responseData.dateBirth === pm.request.body.dateBirth));",
+									"  console.log(\"Country match: \" + (responseData.country === pm.request.body.country));",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"photo\": \"https://cdn.pixabay.com/photo/2016/12/09/16/31/dog-1895260_1280.png\",\n  \"name\": \"{{FirstName}}\",\n  \"lastName\": \"{{LastName}}\",\n  \"dateBirth\": \"1986-03-17T15:21:05.000Z\",\n  \"country\": \"Argentina\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/users/profile",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile user (with mistake))",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var responseBody = pm.response.json();",
+									"pm.test(\"message\", function () {",
+									"    pm.expect(responseBody.message).to.be.a('string');",
+									"});",
+									"",
+									"var responseBody = pm.response.json();",
+									"pm.test(\"Check status error\", function () {",
+									"    pm.expect(responseBody.status).to.eql(\"error\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"photo\": \"https://cdn.pixabay.com/photo/2016/12/09/16/31/dog-1895260_1280.png\",\n  \"name\": \"{{FirstName}}\",\n  \"lastName\": \"{{LastName}}\",\n  \"dateBirth\": \"1986-03-17T15:21:05.000Z\",\n  \"country\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/users/profile",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add car",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var idCar = pm.response.json().data.id;",
+									"pm.collectionVariables.set(\"IDcar\",idCar);",
+									"",
+									"pm.test(\"ADD model Audi\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data.brand).to.eql(\"Audi\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('mileage', 10);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"carBrandId\": {{carBrand}},\n  \"carModelId\": {{carModel}},\n  \"mileage\": {{mileage}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/cars",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add expenses",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"let mileage = pm.collectionVariables.get('mileage')+10;",
+									"pm.collectionVariables.set(\"mileage\", mileage);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"mileage is correct\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data.mileage).to.eql(pm.collectionVariables.get('mileage'));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"carId\": {{IDcar}},\n  \"reportedAt\": \"2024-03-11T20:09:14.287Z\",\n  \"mileage\": {{mileage}},\n  \"liters\": 50,\n  \"totalCost\": 100,\n   \"forceMileage\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/expenses",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"expenses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Delete User is OK\", function () {",
+									"  pm.response.to.have.status(200);",
+									"  pm.expect(pm.response.json().status).to.exist;",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/users",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "FirstName",
+			"value": ""
+		},
+		{
+			"key": "LastName",
+			"value": ""
+		},
+		{
+			"key": "Email",
+			"value": ""
+		},
+		{
+			"key": "passwordreg",
+			"value": ""
+		},
+		{
+			"key": "mileage",
+			"value": ""
+		},
+		{
+			"key": "AudiID",
+			"value": ""
+		},
+		{
+			"key": "newpassword",
+			"value": ""
+		},
+		{
+			"key": "IDcar",
+			"value": ""
+		},
+		{
+			"key": "CreatedCar",
+			"value": ""
+		},
+		{
+			"key": "password",
+			"value": ""
+		},
+		{
+			"key": "email",
+			"value": ""
+		},
+		{
+			"key": "repeatId",
+			"value": ""
+		},
+		{
+			"key": "currentDataArray",
+			"value": ""
+		},
+		{
+			"key": "dataArray",
+			"value": ""
+		}
+	]
+}
